@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is the Qc rack microservice that polls data from an excel file.
+  version: "1.0.0"
+  title: QC rack Microservice
+  contact:
+    email: terry.chan@hohokusinc.com
+    
+tags:
+  - name: status
+    description: Everything about status
+
+paths:
+  /status:
+    get:
+      tags:
+        - status
+      summary: Get all status at Paterson
+      operationId: getQcrack
+      parameters:
+        - name: sorting
+          in: query
+          description: This is getting the suggestion status with sorting order
+          required: true
+          schema:
+            type: string
+        - name: group
+          in: query
+          description: This is getting a specific status group
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/statusInfo'
+        '404':
+          description: Item not found
+
+components:
+  schemas:
+    statusInfo:
+      type: object
+      properties:
+        seq_number:
+          type: number
+          example: 100
+        part_number:
+          type: string
+          example: 5L1341
+        description:
+          type: string
+          example: latch
+        quantity:
+          type: number
+          example: 50
+        wo_number:
+          type: string
+          example: 18568
+        process:
+          type: string
+          example: visual inspection
+        entry_date:
+          type: string
+        priority:
+          type: number
+          example: 10
+        inspector:
+          type: string
+          example: Hossain
+        time_spent:
+          type: string
+          example: 50min
+        complete_time:
+          type: string
+        comment:
+          type: string
+          example: n/a
+        quantity_a_r:
+          type: string
+          example: 50 rejected
+        current_status:
+          type: string
+          example: shipping
+        final_status:
+          type: string
+          example: shipped

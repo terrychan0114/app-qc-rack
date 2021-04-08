@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: QC rack Microservice
+  description: |
+    This is the Qc rack microservice that polls data from an excel file.
+  contact:
+    email: terry.chan@hohokusinc.com
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: status
+  description: Everything about status
+paths:
+  /status:
+    get:
+      tags:
+      - status
+      summary: Get all status at Paterson
+      operationId: get_qcrack
+      parameters:
+      - name: sorting
+        in: query
+        description: This is getting the suggestion status with sorting order
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: group
+        in: query
+        description: This is getting a specific status group
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/statusInfo'
+                x-content-type: application/json
+        "404":
+          description: Item not found
+      x-openapi-router-controller: server.controllers.status_controller
+components:
+  schemas:
+    statusInfo:
+      type: object
+      properties:
+        seq_number:
+          type: number
+          example: 100
+        part_number:
+          type: string
+          example: 5L1341
+        description:
+          type: string
+          example: latch
+        quantity:
+          type: number
+          example: 50
+        wo_number:
+          type: string
+          example: "18568"
+        process:
+          type: string
+          example: visual inspection
+        entry_date:
+          type: string
+        priority:
+          type: number
+          example: 10
+        inspector:
+          type: string
+          example: Hossain
+        time_spent:
+          type: string
+          example: 50min
+        complete_time:
+          type: string
+        comment:
+          type: string
+          example: n/a
+        quantity_a_r:
+          type: string
+          example: 50 rejected
+        current_status:
+          type: string
+          example: shipping
+        final_status:
+          type: string
+          example: shipped
+      example:
+        seq_number: 100
+        process: visual inspection
+        quantity: 50
+        description: latch
+        quantity_a_r: 50 rejected
+        wo_number: "18568"
+        inspector: Hossain
+        priority: 10
+        entry_date: entry_date
+        time_spent: 50min
+        complete_time: complete_time
+        final_status: shipped
+        part_number: 5L1341
+        current_status: shipping
+        comment: n/a
+

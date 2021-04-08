@@ -1,0 +1,8 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  status:
+    build: .
+    ports:
+      - "8083:8080"
+    volumes:
+      - /C/Users/ENGINEERING-FLN1/Documents/Automation/Projects/software_ws/demo_shared_drive:/usr/src/app/doc
